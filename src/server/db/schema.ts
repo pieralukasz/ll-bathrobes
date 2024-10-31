@@ -1,8 +1,6 @@
-// Example model schema from the Drizzle docs
-// https://orm.drizzle.team/docs/sql-schema-declaration
-
 import { sql } from "drizzle-orm";
 import {
+  boolean,
   index,
   integer,
   pgTableCreator,
@@ -10,27 +8,45 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
 export const createTable = pgTableCreator((name) => `ll-bathrobes_${name}`);
+
+const createdAt = timestamp("created_at", { withTimezone: true })
+  .$onUpdate(() => new Date())
+  .notNull();
+
+const updatedAt = timestamp("updated_at", { withTimezone: true }).$onUpdate(
+  () => new Date(),
+);
 
 export const posts = createTable(
   "post",
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
     name: varchar("name", { length: 256 }),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
+    createdAt,
+    updatedAt,
   },
   (example) => ({
     nameIndex: index("name_idx").on(example.name),
-  })
+  }),
 );
+
+export const categories = createTable("category", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  name: varchar("name", { length: 256 }).unique(),
+  createdAt,
+  updatedAt,
+});
+
+export const products = createTable("product", {
+  ean: integer("ean").primaryKey().unique(),
+  name: varchar("name", { length: 256 }),
+  color: varchar("color", { length: 50 }),
+  size: varchar("size", { length: 50 }),
+  quantity: integer("quantity"),
+  categoryId: integer("category_id")
+    .references(() => categories.id)
+    .notNull(),
+  createdAt,
+  updatedAt,
+});
