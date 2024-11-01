@@ -1,7 +1,6 @@
 import { parseStringPromise } from "xml2js";
 import { ParsedProduct, RawProduct } from "~/types/Product";
 
-// Function to fetch and parse XML data using fetch
 export async function parseXml(xmlURL: string): Promise<any> {
   try {
     const response = await fetch(xmlURL);
@@ -26,7 +25,6 @@ export async function parseXml(xmlURL: string): Promise<any> {
   }
 }
 
-// Function to transform raw XML data into usable product data
 export function parseRawXmlToData(rawXml: any): ParsedProduct[] {
   return rawXml.Zamówienie.Artykuly[0].Artykuł.map((product: RawProduct) => {
     const ean = product.$.EAN;
@@ -49,23 +47,14 @@ export function parseRawXmlToData(rawXml: any): ParsedProduct[] {
   });
 }
 
-export const syncXMLWithDBDrizzle = async () => {
+export const getXMLProducts = async () => {
   if (!process.env.XML_URL) {
     throw new Error("Missing XML_URL environment variable");
   }
 
   try {
     const rawXmlData = await parseXml(process.env.XML_URL);
-    const parsedProducts = parseRawXmlToData(rawXmlData);
-
-    console.log(parsedProducts);
-
-    // Upsert product
-
-    // Get list of EANs from the XML data
-    // const eanList = parsedProducts.map((product) => product.ean);
-
-    // Set products not in the current XML to unavailable
+    return parseRawXmlToData(rawXmlData);
   } catch (error) {
     console.error(
       "Error while syncing XML with DB:",

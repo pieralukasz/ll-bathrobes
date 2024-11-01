@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1730390259611,
-      "tag": "0000_wooden_flatman",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1730391143812,
-      "tag": "0001_cold_lizard",
+      "when": 1730438223873,
+      "tag": "0000_tiny_shocker",
       "breakpoints": true
     }
   ]
