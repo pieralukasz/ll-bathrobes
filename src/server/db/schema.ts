@@ -16,22 +16,11 @@ const updatedAt = timestamp("updated_at", { withTimezone: true }).$onUpdate(
   () => new Date(),
 );
 
-// export const posts = createTable(
-//   "post",
-//   {
-//     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-//     name: varchar("name", { length: 256 }),
-//     createdAt,
-//     updatedAt,
-//   },
-//   (example) => ({
-//     nameIndex: index("name_idx").on(example.name),
-//   }),
-// );
-
 export const categories = createTable("categories", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
   name: varchar("name", { length: 256 }).notNull(),
+  createdAt,
+  updatedAt,
 });
 
 export const products = createTable(

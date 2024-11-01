@@ -14,5 +14,4 @@ export interface ParsedProduct {
   color: string;
   size: string;
   quantity: number;
-  available: boolean;
 }
