@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { createCategory } from "../_actions/category";
 import { api } from "~/trpc/react";
+import { Button } from "./ui/button";
 
 export function CreateCategory() {
   const [latestCategory, { refetch }] =
@@ -26,9 +27,9 @@ export function CreateCategory() {
         placeholder="Category Name"
         className="text-black"
       />
-      <button type="submit" disabled={isPending}>
+      <Button type="submit" disabled={isPending}>
         {isPending ? "Creating..." : "Create Category"}
-      </button>
+      </Button>
     </form>
   );
 }

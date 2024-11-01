@@ -1,4 +1,5 @@
 import { parseStringPromise } from "xml2js";
+import { env } from "~/env";
 import { ParsedProduct, RawProduct } from "~/types/product";
 
 export async function parseXml(xmlURL: string): Promise<any> {
@@ -48,12 +49,8 @@ export function parseRawXmlToData(rawXml: any): ParsedProduct[] {
 }
 
 export const getXMLProducts = async () => {
-  if (!process.env.XML_URL) {
-    throw new Error("Missing XML_URL environment variable");
-  }
-
   try {
-    const rawXmlData = await parseXml(process.env.XML_URL);
+    const rawXmlData = await parseXml(env.XML_URL);
     return parseRawXmlToData(rawXmlData);
   } catch (error) {
     console.error(

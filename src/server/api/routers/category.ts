@@ -16,7 +16,7 @@ export const categoryRouter = createTRPCRouter({
     }),
 
   getLatest: publicProcedure.query(async ({ ctx }) => {
-    await sleep(5000);
+    console.log(ctx.user);
     const category = await ctx.db.query.categories.findFirst({
       orderBy: (categories, { desc }) => [desc(categories.createdAt)],
     });
