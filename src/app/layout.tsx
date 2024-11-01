@@ -8,6 +8,8 @@ import { type Metadata } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
 import { cn } from "~/lib/utils";
 
+import { ThemeProvider } from "./_components/theme-provider";
+
 export const metadata: Metadata = {
   title: "Bathrobes L&L",
   description: "Bathrobes L&L",
@@ -21,11 +23,20 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable}`}>
         <body
-          className={cn(
-            "container min-h-screen w-full bg-slate-100 font-sans antialiased",
-          )}
+          className={cn("bg-background min-h-screen font-sans antialiased")}
         >
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TRPCReactProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                {children}
+              </div>
+            </ThemeProvider>
+          </TRPCReactProvider>
         </body>
       </html>
     </ClerkProvider>

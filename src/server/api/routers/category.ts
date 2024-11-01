@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedRoute,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { categories } from "~/server/db/schema";
 
 function sleep(ms: number) {
@@ -7,7 +11,7 @@ function sleep(ms: number) {
 }
 
 export const categoryRouter = createTRPCRouter({
-  create: publicProcedure
+  create: protectedRoute
     .input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(categories).values({
@@ -16,7 +20,6 @@ export const categoryRouter = createTRPCRouter({
     }),
 
   getLatest: publicProcedure.query(async ({ ctx }) => {
-    console.log(ctx.user);
     const category = await ctx.db.query.categories.findFirst({
       orderBy: (categories, { desc }) => [desc(categories.createdAt)],
     });
