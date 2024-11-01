@@ -28,4 +28,7 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
 
-I implemented solution to combine SA with tRPC from: https://github.com/t3dotgg/server-actions-trpc-examples/tree/main
+## TODO
+
+[] I implemented solution to combine SA with tRPC from: https://github.com/t3dotgg/server-actions-trpc-examples/tree/main
+[] Rewrite actions to use experimental_nextAppDirCaller according to: https://trpc.io/blog/trpc-actions

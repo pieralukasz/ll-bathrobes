@@ -1,5 +1,5 @@
 import { parseStringPromise } from "xml2js";
-import { ParsedProduct, RawProduct } from "~/types/Product";
+import { ParsedProduct, RawProduct } from "~/types/product";
 
 export async function parseXml(xmlURL: string): Promise<any> {
   try {
